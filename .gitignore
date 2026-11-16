@@ -1,0 +1,37 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python Bytecode and Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Streamlit Secrets & Local Config
+.streamlit/secrets.toml
+
+# Environment Variables & Secrets
+.env
+.env.*
+*.env
+
+# Hugging Face & PyTorch Caches
+.cache/
+hf_cache/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Log files
+*.log

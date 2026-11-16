@@ -1,0 +1,235 @@
+[
+  {
+    "id": "q01",
+    "category": "direct_factual",
+    "answerable": true,
+    "passage": "Photosynthesis is the biochemical process by which green plants, algae, and certain bacteria convert light energy into chemical energy stored in glucose. During this process, water and carbon dioxide are consumed, and oxygen is released into the atmosphere as a metabolic byproduct. The primary site of photosynthesis in plant cells is the chloroplast, which contains chlorophyll pigments that absorb solar radiation.",
+    "question": "What gas is released into the atmosphere as a byproduct of photosynthesis?",
+    "reference_answers": [
+      "oxygen",
+      "oxygen gas",
+      "O2"
+    ]
+  },
+  {
+    "id": "q02",
+    "category": "direct_factual",
+    "answerable": true,
+    "passage": "The periodic table organizes all known chemical elements in order of increasing atomic number. Dmitri Mendeleev, a Russian chemist, published the first widely recognized periodic table in 1869. He left intentional gaps in his arrangement for undiscovered elements, predicting their properties with remarkable precision.",
+    "question": "In what year was the first widely recognized periodic table published?",
+    "reference_answers": [
+      "1869"
+    ]
+  },
+  {
+    "id": "q03",
+    "category": "direct_factual",
+    "answerable": true,
+    "passage": "The heart is a muscular organ responsible for pumping blood throughout the circulatory system. Human hearts consist of four distinct chambers: the right atrium, the right ventricle, the left atrium, and the left ventricle. Deoxygenated blood enters the right side of the heart, while oxygen-rich blood from the lungs enters the left side.",
+    "question": "How many chambers does a human heart contain?",
+    "reference_answers": [
+      "four",
+      "4",
+      "four distinct chambers",
+      "4 chambers"
+    ]
+  },
+  {
+    "id": "q04",
+    "category": "direct_factual",
+    "answerable": true,
+    "passage": "The Panama Canal is an artificial 82-kilometer waterway in Panama that connects the Atlantic Ocean with the Pacific Ocean. Built across the Isthmus of Panama, it greatly reduces travel time for ships by allowing them to avoid the hazardous Cape Horn route around the southernmost tip of South America.",
+    "question": "Which two oceans are connected by the Panama Canal?",
+    "reference_answers": [
+      "Atlantic Ocean and Pacific Ocean",
+      "the Atlantic Ocean with the Pacific Ocean",
+      "Atlantic and Pacific",
+      "Atlantic Ocean and the Pacific Ocean"
+    ]
+  },
+  {
+    "id": "q05",
+    "category": "named_entity",
+    "answerable": true,
+    "passage": "The James Webb Space Telescope was developed through an international collaboration led by NASA, in partnership with the European Space Agency (ESA) and the Canadian Space Agency (CSA). Launched on an Ariane 5 rocket from Kourou, French Guiana, the observatory is stationed near the Sun-Earth L2 Lagrange point.",
+    "question": "Which rocket launched the James Webb Space Telescope?",
+    "reference_answers": [
+      "Ariane 5",
+      "an Ariane 5 rocket",
+      "Ariane 5 rocket"
+    ]
+  },
+  {
+    "id": "q06",
+    "category": "named_entity",
+    "answerable": true,
+    "passage": "The Python programming language was conceived in the late 1980s by Guido van Rossum at Centrum Wiskunde & Informatica (CWI) in the Netherlands. Van Rossum chose the name 'Python' because he was reading published scripts from 'Monty Python's Flying Circus', a BBC comedy series.",
+    "question": "Who conceived the Python programming language?",
+    "reference_answers": [
+      "Guido van Rossum",
+      "van Rossum"
+    ]
+  },
+  {
+    "id": "q07",
+    "category": "named_entity",
+    "answerable": true,
+    "passage": "Marie Curie conducted pioneering research on radioactivity and was the first woman to win a Nobel Prize. In 1903, she shared the Nobel Prize in Physics with her husband Pierre Curie and physicist Henri Becquerel for their joint investigations into radiation phenomena.",
+    "question": "With which two physicists did Marie Curie share the 1903 Nobel Prize in Physics?",
+    "reference_answers": [
+      "Pierre Curie and Henri Becquerel",
+      "Pierre Curie and physicist Henri Becquerel",
+      "Henri Becquerel and Pierre Curie"
+    ]
+  },
+  {
+    "id": "q08",
+    "category": "named_entity",
+    "answerable": true,
+    "passage": "The Turing Award is recognized as the highest distinction in computer science and is often referred to as the 'Nobel Prize of Computing'. It is administered annually by the Association for Computing Machinery (ACM), an international learned society for computing founded in 1947.",
+    "question": "What organization administers the Turing Award annually?",
+    "reference_answers": [
+      "Association for Computing Machinery",
+      "ACM",
+      "Association for Computing Machinery (ACM)",
+      "the Association for Computing Machinery"
+    ]
+  },
+  {
+    "id": "q09",
+    "category": "numerical",
+    "answerable": true,
+    "passage": "Mount Everest is Earth's highest mountain above sea level, located in the Mahalangur Himal sub-range of the Himalayas. According to a joint survey completed by Nepal and China in December 2020, its official elevation is 8,848.86 meters (29,031.7 feet).",
+    "question": "What is the official elevation of Mount Everest in meters according to the 2020 survey?",
+    "reference_answers": [
+      "8,848.86 meters",
+      "8,848.86",
+      "8848.86 meters",
+      "8848.86"
+    ]
+  },
+  {
+    "id": "q10",
+    "category": "numerical",
+    "answerable": true,
+    "passage": "During the Apollo 11 lunar excursion, astronauts Neil Armstrong and Buzz Aldrin spent two hours, 31 minutes, and 40 seconds exploring Tranquility Base outside their lunar module. During this extravehicular activity, they gathered 47.5 pounds (21.5 kilograms) of lunar soil and rock samples.",
+    "question": "How many kilograms of lunar samples were gathered during the Apollo 11 mission?",
+    "reference_answers": [
+      "21.5 kilograms",
+      "21.5 kg",
+      "21.5",
+      "21.5 kilograms (47.5 pounds)"
+    ]
+  },
+  {
+    "id": "q11",
+    "category": "numerical",
+    "answerable": true,
+    "passage": "The speed of light in a vacuum is an absolute universal physical constant denoted by c. Its exact value is defined as 299,792,458 meters per second. This fundamental speed defines the relationship between space and time in Einstein's theory of special relativity.",
+    "question": "What is the exact speed of light in a vacuum in meters per second?",
+    "reference_answers": [
+      "299,792,458 meters per second",
+      "299,792,458",
+      "299792458",
+      "299,792,458 m/s"
+    ]
+  },
+  {
+    "id": "q12",
+    "category": "numerical",
+    "answerable": true,
+    "passage": "The Golden Gate Bridge in San Francisco has a total length of 2,737 meters (8,981 feet) from abutment to abutment. The distance between its two main suspension towers spans 1,280 meters (4,200 feet), and each tower rises 227 meters (746 feet) above the water surface.",
+    "question": "What is the height of each tower of the Golden Gate Bridge above the water in meters?",
+    "reference_answers": [
+      "227 meters",
+      "227",
+      "227 meters (746 feet)",
+      "227 m"
+    ]
+  },
+  {
+    "id": "q13",
+    "category": "inference_calculation",
+    "answerable": true,
+    "passage": "The Curiosity rover landed on Mars inside Gale Crater in August 2012. The subsequent Perseverance rover touched down on Mars in February 2021 inside Jezero Crater to search for signs of ancient microbial life.",
+    "question": "How many years elapsed between the landing of Curiosity in 2012 and Perseverance in 2021?",
+    "reference_answers": [
+      "9 years",
+      "nine years",
+      "9",
+      "nine"
+    ]
+  },
+  {
+    "id": "q14",
+    "category": "inference_calculation",
+    "answerable": true,
+    "passage": "An electric vehicle was initially equipped with a 75 kWh battery pack that offered a range of 300 miles. An upgraded version featured an expanded 90 kWh battery pack, providing a range of 360 miles.",
+    "question": "How many additional kilowatt-hours (kWh) of battery capacity does the upgraded vehicle have compared to the original model?",
+    "reference_answers": [
+      "15 kWh",
+      "15",
+      "15 kilowatt-hours",
+      "fifteen kWh",
+      "fifteen"
+    ]
+  },
+  {
+    "id": "q15",
+    "category": "inference_calculation",
+    "answerable": true,
+    "passage": "In a biology experiment, an initial bacterial colony contained 250 organisms at 9:00 AM. Under optimal laboratory conditions, the population doubled every hour, reaching 500 organisms at 10:00 AM and 1,000 organisms at 11:00 AM.",
+    "question": "At what time did the bacterial colony reach four times its initial 9:00 AM size?",
+    "reference_answers": [
+      "11:00 AM",
+      "11:00",
+      "11 AM"
+    ]
+  },
+  {
+    "id": "q16",
+    "category": "inference_calculation",
+    "answerable": true,
+    "passage": "A local bakery produced 120 loaves of bread in the morning. By noon, 45 loaves had been sold, and in the afternoon, another 55 loaves were purchased by customers before closing time.",
+    "question": "How many loaves of bread remained unsold at the end of the day?",
+    "reference_answers": [
+      "20 loaves",
+      "20",
+      "twenty loaves",
+      "twenty"
+    ]
+  },
+  {
+    "id": "q17",
+    "category": "unanswerable",
+    "answerable": false,
+    "passage": "The Hubble Space Telescope was launched into low Earth orbit in April 1990 aboard Space Shuttle Discovery. Positioned approximately 540 kilometers above Earth, it has captured over 1.5 million observations of distant stars, nebulae, and galaxies.",
+    "question": "Who was the chief financial officer of NASA when Hubble was launched in 1990?",
+    "reference_answers": []
+  },
+  {
+    "id": "q18",
+    "category": "unanswerable",
+    "answerable": false,
+    "passage": "The Great Barrier Reef off the coast of Queensland, Australia, is the world's largest coral reef system, composed of over 2,900 individual reefs and 900 islands. It spans an area of approximately 344,400 square kilometers and was designated a UNESCO World Heritage Site in 1981.",
+    "question": "How many species of sharks inhabit the Great Barrier Reef?",
+    "reference_answers": []
+  },
+  {
+    "id": "q19",
+    "category": "unanswerable",
+    "answerable": false,
+    "passage": "Alan Turing was a British mathematician and cryptanalyst who played a pivotal role in cracking intercepted German ciphers at Bletchley Park during World War II. His theoretical work on the universal Turing machine formed the foundational basis of modern computer science.",
+    "question": "What was the name of Alan Turing's primary school teacher?",
+    "reference_answers": []
+  },
+  {
+    "id": "q20",
+    "category": "unanswerable",
+    "answerable": false,
+    "passage": "The Sahara Desert in North Africa covers an area of roughly 9.2 million square kilometers, making it the largest hot desert in the world. It encompasses significant portions of Algeria, Chad, Egypt, Libya, Mali, Mauritania, Morocco, Niger, Sudan, and Tunisia.",
+    "question": "What was the average temperature recorded in the Sahara Desert on January 15, 1850?",
+    "reference_answers": []
+  }
+]
+

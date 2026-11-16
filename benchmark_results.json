@@ -1,0 +1,780 @@
+{
+  "metadata": {
+    "dataset_file": "benchmark_dataset.json",
+    "total_items": 20,
+    "timestamp": "2026-11-16 13:59:13",
+    "extractive_model": "distilbert/distilbert-base-cased-distilled-squad",
+    "generative_model": "qwen3:8b",
+    "ollama_base_url": "http://localhost:11434/v1"
+  },
+  "extractive_metrics": {
+    "total_questions": 20,
+    "failures_count": 0,
+    "average_latency_s": 0.1041,
+    "median_latency_s": 0.1012,
+    "overall_answerability_accuracy": 0.8,
+    "answerable_subset": {
+      "count": 16,
+      "mean_exact_match": 0.8125,
+      "mean_f1": 0.8125,
+      "answerability_accuracy": 1.0
+    },
+    "unanswerable_subset": {
+      "count": 4,
+      "correct_abstentions": 0,
+      "correct_abstention_rate": 0.0,
+      "false_answers_count": 4,
+      "false_answer_rate": 1.0
+    }
+  },
+  "generative_metrics": {
+    "total_questions": 20,
+    "failures_count": 0,
+    "average_latency_s": 4.3739,
+    "median_latency_s": 3.708,
+    "overall_answerability_accuracy": 0.95,
+    "answerable_subset": {
+      "count": 16,
+      "mean_exact_match": 0.5,
+      "mean_f1": 0.704,
+      "answerability_accuracy": 0.9375
+    },
+    "unanswerable_subset": {
+      "count": 4,
+      "correct_abstentions": 4,
+      "correct_abstention_rate": 1.0,
+      "false_answers_count": 0,
+      "false_answer_rate": 0.0
+    }
+  },
+  "category_breakdown": {
+    "extractive": {
+      "direct_factual": {
+        "count": 4,
+        "mean_em": 1.0,
+        "mean_f1": 1.0,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 0.1047
+      },
+      "inference_calculation": {
+        "count": 4,
+        "mean_em": 0.25,
+        "mean_f1": 0.25,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 0.0998
+      },
+      "named_entity": {
+        "count": 4,
+        "mean_em": 1.0,
+        "mean_f1": 1.0,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 0.1182
+      },
+      "numerical": {
+        "count": 4,
+        "mean_em": 1.0,
+        "mean_f1": 1.0,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 0.0988
+      },
+      "unanswerable": {
+        "count": 4,
+        "mean_em": 0.0,
+        "mean_f1": 0.0,
+        "answerability_accuracy": 0.0,
+        "avg_latency_s": 0.0991
+      }
+    },
+    "generative": {
+      "direct_factual": {
+        "count": 4,
+        "mean_em": 0.5,
+        "mean_f1": 0.8173,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 3.8757
+      },
+      "inference_calculation": {
+        "count": 4,
+        "mean_em": 0.5,
+        "mean_f1": 0.5667,
+        "answerability_accuracy": 0.75,
+        "avg_latency_s": 6.1848
+      },
+      "named_entity": {
+        "count": 4,
+        "mean_em": 0.5,
+        "mean_f1": 0.794,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 3.6483
+      },
+      "numerical": {
+        "count": 4,
+        "mean_em": 0.5,
+        "mean_f1": 0.6381,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 3.9068
+      },
+      "unanswerable": {
+        "count": 4,
+        "mean_em": 0.0,
+        "mean_f1": 0.0,
+        "answerability_accuracy": 1.0,
+        "avg_latency_s": 4.2537
+      }
+    }
+  },
+  "predictions": [
+    {
+      "id": "q01",
+      "category": "direct_factual",
+      "answerable": true,
+      "question": "What gas is released into the atmosphere as a byproduct of photosynthesis?",
+      "reference_answers": [
+        "oxygen",
+        "oxygen gas",
+        "O2"
+      ],
+      "extractive": {
+        "answer": "oxygen",
+        "latency_s": 0.1159,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "Oxygen.",
+        "latency_s": 6.3202,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q02",
+      "category": "direct_factual",
+      "answerable": true,
+      "question": "In what year was the first widely recognized periodic table published?",
+      "reference_answers": [
+        "1869"
+      ],
+      "extractive": {
+        "answer": "1869",
+        "latency_s": 0.098,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "1869",
+        "latency_s": 2.7743,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q03",
+      "category": "direct_factual",
+      "answerable": true,
+      "question": "How many chambers does a human heart contain?",
+      "reference_answers": [
+        "four",
+        "4",
+        "four distinct chambers",
+        "4 chambers"
+      ],
+      "extractive": {
+        "answer": "four",
+        "latency_s": 0.1032,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The human heart contains four chambers.",
+        "latency_s": 3.2665,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.5,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q04",
+      "category": "direct_factual",
+      "answerable": true,
+      "question": "Which two oceans are connected by the Panama Canal?",
+      "reference_answers": [
+        "Atlantic Ocean and Pacific Ocean",
+        "the Atlantic Ocean with the Pacific Ocean",
+        "Atlantic and Pacific",
+        "Atlantic Ocean and the Pacific Ocean"
+      ],
+      "extractive": {
+        "answer": "Atlantic Ocean with the Pacific Ocean",
+        "latency_s": 0.1016,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The Panama Canal connects the Atlantic Ocean and the Pacific Ocean.",
+        "latency_s": 3.1416,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.7692,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q05",
+      "category": "named_entity",
+      "answerable": true,
+      "question": "Which rocket launched the James Webb Space Telescope?",
+      "reference_answers": [
+        "Ariane 5",
+        "an Ariane 5 rocket",
+        "Ariane 5 rocket"
+      ],
+      "extractive": {
+        "answer": "Ariane 5 rocket",
+        "latency_s": 0.17,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The James Webb Space Telescope was launched on an Ariane 5 rocket.",
+        "latency_s": 3.1327,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.4615,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q06",
+      "category": "named_entity",
+      "answerable": true,
+      "question": "Who conceived the Python programming language?",
+      "reference_answers": [
+        "Guido van Rossum",
+        "van Rossum"
+      ],
+      "extractive": {
+        "answer": "Guido van Rossum",
+        "latency_s": 0.0993,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "Guido van Rossum.",
+        "latency_s": 4.263,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q07",
+      "category": "named_entity",
+      "answerable": true,
+      "question": "With which two physicists did Marie Curie share the 1903 Nobel Prize in Physics?",
+      "reference_answers": [
+        "Pierre Curie and Henri Becquerel",
+        "Pierre Curie and physicist Henri Becquerel",
+        "Henri Becquerel and Pierre Curie"
+      ],
+      "extractive": {
+        "answer": "Pierre Curie and physicist Henri Becquerel",
+        "latency_s": 0.1026,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "Pierre Curie and Henri Becquerel.",
+        "latency_s": 3.7552,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q08",
+      "category": "named_entity",
+      "answerable": true,
+      "question": "What organization administers the Turing Award annually?",
+      "reference_answers": [
+        "Association for Computing Machinery",
+        "ACM",
+        "Association for Computing Machinery (ACM)",
+        "the Association for Computing Machinery"
+      ],
+      "extractive": {
+        "answer": "Association for Computing Machinery",
+        "latency_s": 0.101,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The Association for Computing Machinery (ACM) administers the Turing Award annually.",
+        "latency_s": 3.4425,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.7143,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q09",
+      "category": "numerical",
+      "answerable": true,
+      "question": "What is the official elevation of Mount Everest in meters according to the 2020 survey?",
+      "reference_answers": [
+        "8,848.86 meters",
+        "8,848.86",
+        "8848.86 meters",
+        "8848.86"
+      ],
+      "extractive": {
+        "answer": "8,848.86",
+        "latency_s": 0.0972,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The official elevation of Mount Everest according to the 2020 survey is 8,848.86 meters.",
+        "latency_s": 3.5524,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.2857,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q10",
+      "category": "numerical",
+      "answerable": true,
+      "question": "How many kilograms of lunar samples were gathered during the Apollo 11 mission?",
+      "reference_answers": [
+        "21.5 kilograms",
+        "21.5 kg",
+        "21.5",
+        "21.5 kilograms (47.5 pounds)"
+      ],
+      "extractive": {
+        "answer": "21.5",
+        "latency_s": 0.0952,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "21.5 kilograms",
+        "latency_s": 3.6608,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q11",
+      "category": "numerical",
+      "answerable": true,
+      "question": "What is the exact speed of light in a vacuum in meters per second?",
+      "reference_answers": [
+        "299,792,458 meters per second",
+        "299,792,458",
+        "299792458",
+        "299,792,458 m/s"
+      ],
+      "extractive": {
+        "answer": "299,792,458",
+        "latency_s": 0.1008,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "299,792,458 meters per second.",
+        "latency_s": 4.2178,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q12",
+      "category": "numerical",
+      "answerable": true,
+      "question": "What is the height of each tower of the Golden Gate Bridge above the water in meters?",
+      "reference_answers": [
+        "227 meters",
+        "227",
+        "227 meters (746 feet)",
+        "227 m"
+      ],
+      "extractive": {
+        "answer": "227",
+        "latency_s": 0.102,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The height of each tower of the Golden Gate Bridge above the water is 227 meters.",
+        "latency_s": 4.1963,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.2667,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q13",
+      "category": "inference_calculation",
+      "answerable": true,
+      "question": "How many years elapsed between the landing of Curiosity in 2012 and Perseverance in 2021?",
+      "reference_answers": [
+        "9 years",
+        "nine years",
+        "9",
+        "nine"
+      ],
+      "extractive": {
+        "answer": "2012",
+        "latency_s": 0.1014,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "9 years.",
+        "latency_s": 12.483,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q14",
+      "category": "inference_calculation",
+      "answerable": true,
+      "question": "How many additional kilowatt-hours (kWh) of battery capacity does the upgraded vehicle have compared to the original model?",
+      "reference_answers": [
+        "15 kWh",
+        "15",
+        "15 kilowatt-hours",
+        "fifteen kWh",
+        "fifteen"
+      ],
+      "extractive": {
+        "answer": "90",
+        "latency_s": 0.0964,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The upgraded vehicle has 15 additional kilowatt-hours of battery capacity compared to the original model.",
+        "latency_s": 3.6409,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.2667,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q15",
+      "category": "inference_calculation",
+      "answerable": true,
+      "question": "At what time did the bacterial colony reach four times its initial 9:00 AM size?",
+      "reference_answers": [
+        "11:00 AM",
+        "11:00",
+        "11 AM"
+      ],
+      "extractive": {
+        "answer": "11:00 AM",
+        "latency_s": 0.1022,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "11:00 AM",
+        "latency_s": 5.809,
+        "success": true,
+        "error": null,
+        "em": 1.0,
+        "f1": 1.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q16",
+      "category": "inference_calculation",
+      "answerable": true,
+      "question": "How many loaves of bread remained unsold at the end of the day?",
+      "reference_answers": [
+        "20 loaves",
+        "20",
+        "twenty loaves",
+        "twenty"
+      ],
+      "extractive": {
+        "answer": "120",
+        "latency_s": 0.0991,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": true,
+        "false_answer": false
+      },
+      "generative": {
+        "answer": "The provided passage does not contain this information.",
+        "latency_s": 2.8062,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": true,
+        "answerability_correct": false,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q17",
+      "category": "unanswerable",
+      "answerable": false,
+      "question": "Who was the chief financial officer of NASA when Hubble was launched in 1990?",
+      "reference_answers": [],
+      "extractive": {
+        "answer": "Space Shuttle Discovery",
+        "latency_s": 0.1016,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": false,
+        "false_answer": true
+      },
+      "generative": {
+        "answer": "The provided passage does not contain this information.",
+        "latency_s": 5.5141,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": true,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q18",
+      "category": "unanswerable",
+      "answerable": false,
+      "question": "How many species of sharks inhabit the Great Barrier Reef?",
+      "reference_answers": [],
+      "extractive": {
+        "answer": "2,900",
+        "latency_s": 0.0956,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": false,
+        "false_answer": true
+      },
+      "generative": {
+        "answer": "The provided passage does not contain this information.",
+        "latency_s": 3.533,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": true,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q19",
+      "category": "unanswerable",
+      "answerable": false,
+      "question": "What was the name of Alan Turing's primary school teacher?",
+      "reference_answers": [],
+      "extractive": {
+        "answer": "mathematician and cryptanalyst",
+        "latency_s": 0.095,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": false,
+        "false_answer": true
+      },
+      "generative": {
+        "answer": "The provided passage does not contain this information.",
+        "latency_s": 3.933,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": true,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    },
+    {
+      "id": "q20",
+      "category": "unanswerable",
+      "answerable": false,
+      "question": "What was the average temperature recorded in the Sahara Desert on January 15, 1850?",
+      "reference_answers": [],
+      "extractive": {
+        "answer": "hot",
+        "latency_s": 0.1041,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": false,
+        "answerability_correct": false,
+        "false_answer": true
+      },
+      "generative": {
+        "answer": "The provided passage does not contain this information.",
+        "latency_s": 4.0348,
+        "success": true,
+        "error": null,
+        "em": 0.0,
+        "f1": 0.0,
+        "is_abstained": true,
+        "answerability_correct": true,
+        "false_answer": false
+      }
+    }
+  ]
+}
