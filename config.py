@@ -17,6 +17,8 @@ OLLAMA_REQUEST_TIMEOUT: int = 60  # seconds
 # Groq API Configuration
 GROQ_BASE_URL: str = "https://api.groq.com/openai/v1"
 GROQ_MODEL_NAME: str = "openai/gpt-oss-20b"
+GROQ_VISION_MODEL_NAME: str = "qwen/qwen3.8-27b"
+VQA_LOCAL_MODEL_NAME: str = "dandelin/vilt-b32-finetuned-vqa"
 
 # Extractive QA Sliding Window Parameters (to support long passages)
 MAX_SEQ_LENGTH: int = 512

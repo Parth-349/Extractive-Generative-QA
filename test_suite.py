@@ -21,14 +21,19 @@ Covers:
 """
 
 import sys
+import base64
+from io import BytesIO
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from openai import APIConnectionError, APITimeoutError
 from config import GROQ_BASE_URL, GROQ_MODEL_NAME
+from PIL import Image
 from extractive_qa import ExtractiveQAModel, ExtractiveResult, extract_context_excerpt
 from generative_qa import GenerativeQAModel, GenerativeResult, normalize_model_tag, check_exact_model_match
 from comparison import compare_answers, AgreementStatus, normalize_text
+from vqa import VisualQAModel
+from tts import synthesize_speech
 
 
 def run_all_tests():
@@ -236,6 +241,89 @@ def run_all_tests():
     assert "<think>" not in groq_result.answer
     assert groq_result.reasoning is None
     print("✔ [2.5] Groq provider validation, mocked connection checks, and answer handling verified.")
+
+    # Test 2.6: Mocked Figure VQA Groq Request and Validation
+    for missing_vqa_key in (None, "", " \t "):
+        try:
+            VisualQAModel(provider="groq", api_key=missing_vqa_key)
+            assert False, f"Expected an empty Groq Vision API key to be rejected: {missing_vqa_key!r}"
+        except ValueError:
+            pass
+
+    vqa_model = VisualQAModel(provider="groq", api_key="dummy-groq-key")
+    invalid_image_result = vqa_model.answer_figure(b"not an image", "What is shown?")
+    assert invalid_image_result.success is False
+    assert invalid_image_result.error
+    empty_figure_question = vqa_model.answer_figure(
+        Image.new("RGB", (2, 2)), "   "
+    )
+    assert empty_figure_question.success is False
+    assert "empty" in empty_figure_question.error.lower()
+
+    vqa_response = SimpleNamespace(
+        choices=[
+            SimpleNamespace(
+                message=SimpleNamespace(content="<think>reasoning</think> A bar chart.")
+            )
+        ]
+    )
+    with patch.object(
+        vqa_model.client.chat.completions, "create", return_value=vqa_response
+    ) as create_vqa:
+        vqa_result = vqa_model.answer_figure(
+            Image.new("RGB", (3, 2), color="red"), "What does this figure show?"
+        )
+    assert vqa_result.success is True
+    assert vqa_result.answer == "A bar chart."
+    assert vqa_result.provider == "groq"
+    vqa_messages = create_vqa.call_args.kwargs["messages"]
+    multimodal_content = vqa_messages[1]["content"]
+    assert multimodal_content[0]["type"] == "text"
+    image_url = multimodal_content[1]["image_url"]["url"]
+    assert image_url.startswith("data:image/jpeg;base64,")
+    image_bytes = base64.b64decode(image_url.split(",", 1)[1])
+    assert Image.open(BytesIO(image_bytes)).format == "JPEG"
+
+    with patch.object(
+        vqa_model.client.chat.completions,
+        "create",
+        side_effect=APITimeoutError(request=Mock()),
+    ):
+        vqa_timeout = vqa_model.answer_figure(
+            Image.new("RGB", (2, 2)), "What is shown?"
+        )
+    assert vqa_timeout.success is False
+    assert "timed out" in vqa_timeout.error.lower()
+    print("✔ [2.6] Figure VQA validates input, sends base64 multimodal requests, strips think tags, and handles timeouts.")
+
+    # Test 2.7: Mocked Text-to-Speech Handling
+    empty_speech, empty_speech_error = synthesize_speech("   ")
+    assert empty_speech is None
+    assert "empty" in empty_speech_error.lower()
+
+    with patch("tts.gTTS") as mock_gtts:
+        mock_gtts.return_value.write_to_fp.side_effect = (
+            lambda output: output.write(b"mock-mp3-bytes")
+        )
+        speech_bytes, speech_error = synthesize_speech("Hello there")
+    assert speech_bytes == b"mock-mp3-bytes"
+    assert speech_error is None
+    mock_gtts.assert_called_once_with(text="Hello there", lang="en")
+
+    with patch("tts.gTTS") as mock_gtts:
+        mock_gtts.return_value.write_to_fp.side_effect = (
+            lambda output: output.write(b"mock-mp3-bytes")
+        )
+        synthesize_speech("**Katsushika Hokusai** and *Mount Fuji*")
+    mock_gtts.assert_called_once_with(
+        text="Katsushika Hokusai and Mount Fuji", lang="en"
+    )
+
+    with patch("tts.gTTS", side_effect=RuntimeError("mock synthesis failure")):
+        failed_speech, failed_speech_error = synthesize_speech("Hello there")
+    assert failed_speech is None
+    assert "mock synthesis failure" in failed_speech_error
+    print("✔ [2.7] TTS handles empty input, returns mocked MP3 bytes, and reports synthesis errors.")
 
     # ---------------------------------------------------------
     # 3. Answer Comparison & Disagreement Tests

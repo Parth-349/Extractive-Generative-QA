@@ -244,7 +244,7 @@ def compare_answers(
             latency_difference_s=round(lat_diff, 3),
             speedup_ratio=speedup,
             summary=(
-                "Answerability Divergence: "
+                "Possible Hallucination / Answerability Divergence: "
                 + (
                     "The extractive model reported no conclusive answer, whereas the generative model produced a response. "
                     if ext_abstained
@@ -323,9 +323,9 @@ def compare_answers(
         status = AgreementStatus.DISAGREEMENT
         status_color = "#dc3545"  # Red
         summary = (
-            f"Inter-Model Divergence: Low lexical overlap (Token F1 = {f1:.1%}). "
+            f"Possible Hallucination / Inter-Model Divergence: Low lexical overlap (Token F1 = {f1:.1%}). "
             "The models produced substantially different responses. "
-            "This indicates a potential disagreement requiring inspection against the source passage to determine correctness."
+            "This indicates a potential disagreement requiring verification against the source passage to determine correctness."
         )
 
     return ComparisonResult(

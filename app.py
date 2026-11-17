@@ -5,8 +5,9 @@ Side-by-side comparative analysis of extractive QA and Ollama or Groq generative
 
 import html
 import os
+import re
 import streamlit as st
-from typing import Tuple, List
+from typing import Tuple, List, Optional
 
 from config import (
     EXTRACTIVE_MODEL_NAME,
@@ -14,6 +15,8 @@ from config import (
     OLLAMA_BASE_URL,
     GROQ_BASE_URL,
     GROQ_MODEL_NAME,
+    GROQ_VISION_MODEL_NAME,
+    VQA_LOCAL_MODEL_NAME,
     DEFAULT_TEMPERATURE,
     DEFAULT_MAX_TOKENS,
     SAMPLE_PRESETS,
@@ -22,6 +25,8 @@ from config import (
 from extractive_qa import ExtractiveQAModel, ExtractiveResult
 from generative_qa import GenerativeQAModel, GenerativeResult
 from comparison import compare_answers, AgreementStatus
+from tts import synthesize_speech
+from vqa import VisualQAModel, VQAResult
 
 
 def _get_setting(key: str, default: str = "") -> str:
@@ -337,12 +342,15 @@ def check_provider_status(
     return gen.check_connection()
 
 
-def _answer_card(answer: str, variant: str) -> None:
+def _answer_card(answer: str, variant: str, label: Optional[str] = None) -> None:
     """Render a styled answer card. variant: 'ext' or 'gen'."""
     css_class = f"answer-card-{variant}"
-    label = "Extracted Span" if variant == "ext" else "Generated Answer"
-    # Escape HTML special chars in the answer text
-    safe = answer.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    label = label or ("Extracted Span" if variant == "ext" else "Generated Answer")
+    safe = html.escape(answer)
+    safe = re.sub(r"`([^`\n]+)`", r"<code>\1</code>", safe)
+    safe = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", safe, flags=re.DOTALL)
+    safe = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", safe)
+    safe = safe.replace("\n", "<br>")
     st.markdown(
         f"""<div class="{css_class}">
               <div class="label">{label}</div>
@@ -352,7 +360,21 @@ def _answer_card(answer: str, variant: str) -> None:
     )
 
 
-def main():
+def _render_tts_button(text: str, audio_key: str, button_key: str) -> None:
+    if st.button("🔊 Read Answer Aloud", key=button_key):
+        audio_bytes, error = synthesize_speech(text)
+        if error or not audio_bytes:
+            st.session_state.pop(audio_key, None)
+            st.warning(f"Text-to-speech is unavailable: {error or 'No audio was generated.'}")
+        else:
+            st.session_state[audio_key] = audio_bytes
+
+    audio_bytes = st.session_state.get(audio_key)
+    if audio_bytes:
+        st.audio(audio_bytes, format="audio/mp3")
+
+
+def _render_passage_qa_tab():
     provider = _get_setting("QA_PROVIDER", "ollama").strip().lower() or "ollama"
     if provider not in {"ollama", "groq"}:
         st.error("Invalid QA_PROVIDER configuration. Set it to 'ollama' or 'groq'.")
@@ -386,6 +408,10 @@ def main():
         st.session_state["ollama_url"] = OLLAMA_BASE_URL
     if st.session_state.get("gen_provider") != provider:
         st.session_state.pop("latest_comparison", None)
+        st.session_state.pop("latest_vqa_result", None)
+        st.session_state.pop("passage_ext_tts_audio", None)
+        st.session_state.pop("passage_gen_tts_audio", None)
+        st.session_state.pop("figure_vqa_tts_audio", None)
         if (
             "gen_provider" in st.session_state
             or "gen_model_name" not in st.session_state
@@ -585,12 +611,18 @@ def main():
             st.session_state["question_input"] = ""
             st.session_state["current_preset"] = "-- Custom / Blank --"
             st.session_state.pop("latest_comparison", None)
+            st.session_state.pop("passage_ext_tts_audio", None)
+            st.session_state.pop("passage_gen_tts_audio", None)
+            st.session_state.pop("figure_vqa_tts_audio", None)
             st.rerun()
 
     # ═════════════════════════════════════════════════════════════
     # SECTION 2 – MODEL RESPONSES
     # ═════════════════════════════════════════════════════════════
     if run_button:
+        st.session_state.pop("passage_ext_tts_audio", None)
+        st.session_state.pop("passage_gen_tts_audio", None)
+        st.session_state.pop("figure_vqa_tts_audio", None)
         if not passage_text.strip() or not question_text.strip():
             st.session_state.pop("latest_comparison", None)
             if not passage_text.strip():
@@ -701,6 +733,9 @@ def main():
             st.error(f"Extractive QA Error: {ext_res.error}")
         else:
             _answer_card(ext_res.answer, "ext")
+            _render_tts_button(
+                ext_res.answer, "passage_ext_tts_audio", "passage_ext_tts_button"
+            )
 
             m1, m2, m3 = st.columns(3)
             m1.metric("⏱️ Latency (s)", f"{ext_res.latency_s:.3f}")
@@ -743,6 +778,9 @@ def main():
                 st.info("💡 Ensure Ollama is running (`ollama serve`) and the model is downloaded.")
         else:
             _answer_card(gen_res.answer, "gen")
+            _render_tts_button(
+                gen_res.answer, "passage_gen_tts_audio", "passage_gen_tts_button"
+            )
 
             g1, g2 = st.columns(2)
             g1.metric("⏱️ Latency (s)", f"{gen_res.latency_s:.3f}")
@@ -767,12 +805,20 @@ def main():
         AgreementStatus.DISAGREEMENT:      ("error",   "🚨"),
         AgreementStatus.UNANSWERABLE:      ("info",    "ℹ️"),
     }
-    fn_name, icon = _status_map.get(comp.status, ("error", "❌"))
-    getattr(st, fn_name)(f"{icon} **{comp.status.value}** — {comp.summary}")
+    if comp.status == AgreementStatus.DISAGREEMENT:
+        st.error(f"🚨 **Possible Hallucination / Disagreement** — {comp.summary}")
+    elif not comp.answerability_agreement:
+        st.warning(
+            "⚠️ **Possible Hallucination / Answerability Divergence** — "
+            f"{comp.summary}"
+        )
+    else:
+        fn_name, icon = _status_map.get(comp.status, ("error", "❌"))
+        getattr(st, fn_name)(f"{icon} **{comp.status.value}** — {comp.summary}")
 
     st.caption(
-        "ℹ️ *Model disagreement reflects divergent phrasing, scope, or factual claims. "
-        "Disagreement is not proof of hallucination — verify both outputs against the original context.*"
+        "Model disagreement or answerability divergence may indicate a possible hallucination "
+        "or differing scope/phrasing — verify both outputs against the original context."
     )
 
     # Comparative metric row – four columns with consistent labels
@@ -849,6 +895,99 @@ def main():
             "*The metrics above evaluate relative lexical overlap between the two models. "
             "They do not indicate benchmark accuracy against a labeled ground-truth dataset.*"
         )
+
+
+def _render_figure_vqa_tab() -> None:
+    provider = _get_setting("QA_PROVIDER", "ollama").strip().lower() or "ollama"
+    if provider not in {"ollama", "groq"}:
+        st.error("Invalid QA_PROVIDER configuration. Set it to 'ollama' or 'groq'.")
+        return
+
+    st.subheader("Figure Question Answering")
+    uploaded_image = st.file_uploader(
+        "Upload a figure",
+        type=["png", "jpg", "jpeg", "webp"],
+        key="figure_vqa_upload",
+    )
+    if uploaded_image is not None:
+        st.image(uploaded_image, caption=uploaded_image.name, use_container_width=True)
+
+    figure_question = st.text_input(
+        "Figure question",
+        placeholder="e.g., What trend is shown in the chart?",
+        key="figure_vqa_question",
+    )
+
+    if st.button("🔍 Answer Figure Question", key="answer_figure_question"):
+        st.session_state.pop("figure_vqa_tts_audio", None)
+        st.session_state.pop("latest_vqa_result", None)
+
+        if uploaded_image is None:
+            st.warning("Please upload an image before asking a figure question.")
+        elif not figure_question.strip():
+            st.warning("Please enter a question about the figure.")
+        else:
+            if provider == "groq":
+                api_key = _get_setting("GROQ_API_KEY")
+                if not api_key.strip():
+                    st.error(
+                        "GROQ_API_KEY must be configured in `.streamlit/secrets.toml` "
+                        "or environment variables to use Groq Figure VQA."
+                    )
+                    return
+                model_name = _get_setting(
+                    "GROQ_VISION_MODEL", GROQ_VISION_MODEL_NAME
+                )
+                model = VisualQAModel(
+                    provider="groq",
+                    api_key=api_key,
+                    model_name=model_name,
+                    base_url=GROQ_BASE_URL,
+                )
+            else:
+                model_name = VQA_LOCAL_MODEL_NAME
+                model = VisualQAModel(
+                    provider="ollama",
+                    model_name=VQA_LOCAL_MODEL_NAME,
+                )
+
+            with st.spinner("Analyzing the figure..."):
+                result = model.answer_figure(uploaded_image.getvalue(), figure_question)
+            st.session_state["latest_vqa_result"] = {
+                "result": result,
+                "provider": provider,
+                "model_name": model_name,
+            }
+
+    latest_vqa = st.session_state.get("latest_vqa_result")
+    if latest_vqa is None:
+        return
+
+    result: VQAResult = latest_vqa["result"]
+    st.markdown(
+        f'<span class="model-badge">{latest_vqa["model_name"]} &nbsp;·&nbsp; '
+        f'{latest_vqa["provider"].capitalize()}</span>',
+        unsafe_allow_html=True,
+    )
+    if not result.success:
+        st.error(f"Figure VQA Error: {result.error}")
+        return
+
+    _answer_card(result.answer, "gen", label="Figure Answer")
+    st.metric("⏱️ Latency (s)", f"{result.latency_s:.3f}")
+    _render_tts_button(
+        result.answer, "figure_vqa_tts_audio", "figure_vqa_tts_button"
+    )
+
+
+def main() -> None:
+    passage_tab, figure_tab = st.tabs(
+        ["📝 Passage QA (Extractive vs Generative)", "🖼️ Figure VQA"]
+    )
+    with passage_tab:
+        _render_passage_qa_tab()
+    with figure_tab:
+        _render_figure_vqa_tab()
 
 
 if __name__ == "__main__":

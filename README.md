@@ -40,6 +40,9 @@ This project builds an end-to-end framework to:
 - **Interactive Streamlit Web Interface:** Side-by-side display of extractive and generative answers, per-model latency, uncalibrated span confidence, and supporting context excerpts.
 - **Sliding-Window Chunking for Long Passages:** Extractive inference segments passages exceeding 512 tokens using overlapping strides (`max_seq_length=512`, `doc_stride=128`), resolving token offsets back to exact character positions in the source passage.
 - **Inter-Model Disagreement Analysis:** Computes directional token precision, token recall, token F1, and span containment between both model outputs without confusing inter-model divergence with ground-truth accuracy.
+- **Possible-Hallucination Flagging:** Highlights substantial disagreement and answerability divergence for review against the original passage.
+- **Figure VQA:** The Figure VQA tab supports Groq Vision (`qwen/qwen3.8-27b`) or the local ViLT model (`dandelin/vilt-b32-finetuned-vqa`).
+- **Text-to-Speech Playback:** Read passage and figure answers aloud using gTTS-generated MP3 audio.
 - **Gold-Standard 20-Question Benchmark:** A balanced dataset evaluating Direct Factual, Named Entity, Numerical, Simple Inference/Calculation, and Unanswerable queries.
 - **Standardized Evaluation Framework (`evaluate.py`):** Implements official SQuAD-style normalization, multi-reference matching, answerability scoring, and false-answer tracking with output to structured JSON and CSV files.
 - **Local or Hosted Generative QA:** Ollama remains the default and supports offline-capable local execution; Groq can be configured as an optional hosted provider.
